@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -34,34 +35,22 @@ namespace example
         {
             var sb = new StringBuilder();
             int buffer;
-
             for (int i = 0; i < text.Length; i += 2)
             {
-                if (text.Substring(i, 2).Contains(" ")) i++;
+                if (text.Substring(i, 2).Contains(" "))
+                {
+                    i++;
+                    sb.Append(' ');
+                }
                 buffer = Convert.ToInt32(text.Substring(i, 2));
-                //if (dict.ContainsKey());
-                //{
-
-                //}
-                //else sb.Append(" ");
-
-
-                //var keys = dict.Where(x => dict.Values.Contains(x.Value)).Select(x => x.Key);
-                //textBoxInput.Text = (string)keys;
-                //    //foreach (var s in text)
-                //    //{
-                //    //var keys = dictionary.Where(x => someValues.Contains(x.Value)).Select(x => x.Key);
-                //    // var myKey = types.FirstOrDefault(x => x.Value == "one").Key;
-                //    //    //var symbol = dict.FirstOrDefault(x => x.Value == dict[s]).Key;
-                //    //    //sb.Append($"{dict.FirstOrDefault(x => x.Value == dict[s]).Key}");
-                //    //    if (dict.ContainsValue(dict[s]))
-                //    //    {
-                //    //        var symbol = dict.FirstOrDefault(x => x.Value == dict[s]).Key;
-                //    //        dict[s].Enqueue(number);
-                //    //        sb.Append(string.Format("{0:D2}", symbol));
-                //    //    }
-                //    //    else sb.Append(s);
-                //    //}
+                for (int j = 0; j < dict.Count(); j++)
+                {
+                    if (dict.Values.ToList()[j].Contains(buffer))
+                    {
+                        sb.Append(dict.Keys.ToList()[j]);
+                        break;
+                    }
+                }
             }
             return sb.ToString();
         }
