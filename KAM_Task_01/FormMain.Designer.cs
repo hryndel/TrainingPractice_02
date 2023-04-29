@@ -88,6 +88,7 @@
             // 
             // textBoxOutput
             // 
+            this.textBoxOutput.AcceptsReturn = true;
             this.textBoxOutput.Location = new System.Drawing.Point(666, 12);
             this.textBoxOutput.Multiline = true;
             this.textBoxOutput.Name = "textBoxOutput";

@@ -34,23 +34,38 @@ namespace example
         string Decrypt(string text, Dictionary<char, Queue<int>> dict)
         {
             var sb = new StringBuilder();
-            int buffer;
-            for (int i = 0; i < text.Length; i += 2)
+            int i = 0;
+            while (i + 1 < text.Length)
             {
-                if (text.Substring(i, 2).Contains(" "))
+                if (!text.Substring(i, 2).Contains(" ") && text[i] != '\n' && text[i + 1] !='\n' && int.TryParse(text.Substring(i, 2), out var buffer))
                 {
-                    i++;
-                    sb.Append(' ');
-                }
-                buffer = Convert.ToInt32(text.Substring(i, 2));
-                for (int j = 0; j < dict.Count(); j++)
-                {
-                    if (dict.Values.ToList()[j].Contains(buffer))
+                    for (int j = 0; j < dict.Count(); j++)
                     {
-                        sb.Append(dict.Keys.ToList()[j]);
-                        break;
+                        if (dict.Values.ToList()[j].Contains(buffer))
+                        {
+                            sb.Append(dict.Keys.ToList()[j]);
+                            break;
+                        }
+                    }
+                    i += 2;
+                }
+                else
+                {
+                    if (text.Substring(i, 2) == "\r\n")
+                    {
+                        sb.Append("\r\n");
+                        i+=2;
+                    }
+                    else
+                    {
+                        sb.Append(text[i]);
+                        i++;
                     }
                 }
+            }
+            if (!int.TryParse(text.Last().ToString(), out var last))
+            {
+                sb.Append(text.Last());
             }
             return sb.ToString();
         }
